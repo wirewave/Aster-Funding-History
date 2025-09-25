@@ -11,8 +11,8 @@
       --card-color: #ffffff;
       --input-bg: #ffffff;
       --input-border: #000000;
-      --button-bg: #f3ba2f;
-      --button-hover: #d4a728;
+      --button-bg: #efbe84;
+      --button-hover: #d9a769;
       --quickbutton-bg: rgb(229, 231, 235);
       --quickbutton-hover: rgb(209, 213, 219);
       --fundingrate-line: black;
@@ -30,8 +30,8 @@
       --card-color: #000000;
       --input-bg: #000000;
       --input-border: #ffffff;
-      --button-bg: #d4a728;
-      --button-hover: #f3ba2f;
+      --button-bg: #d9a769;
+      --button-hover: #efbe84;
       --quickbutton-bg: rgb(59, 63, 69);
       --quickbutton-hover: rgb(79, 81, 85);
       --fundingrate-line: white;
@@ -222,7 +222,7 @@
       }
       button {
       background-color: var(--button-bg);
-      color: white;
+      color: black;
       cursor: pointer;
       border: none;
       transition: background-color 0.3s;
@@ -1010,10 +1010,10 @@ async function loadFundingData(range = '7d') {
   toggleSpinner(true);
 
   try {
-    const fetches = chunks.map(([start, end]) =>
-      fetch(`https://fapi.asterdex.com/fapi/v1/fundingRate?symbol=${symbol}&startTime=${start}&endTime=${end}&limit=1000`)
-        .then(res => res.json())
-    );
+    const fetches = chunks.map(([start, end]) => {
+      return fetch(`https://aster.wirewaving.workers.dev?symbol=${symbol}&startTime=${start}&endTime=${end}&limit=1000`)
+        .then(res => res.json());
+    });
 
     const chunkDataArrays = await Promise.all(fetches);
     const combinedData = chunkDataArrays.flat().sort((a, b) => a.fundingTime - b.fundingTime);
